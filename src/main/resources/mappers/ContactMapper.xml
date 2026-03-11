@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.move.userService.mapper.ContactMapper">
+
+    <insert id="insertContact"
+            parameterType="com.move.userService.model.Contact"
+            useGeneratedKeys="true"
+            keyProperty="id"
+            keyColumn="id">
+        INSERT INTO Contact (
+        user_id,
+        email_id,
+        phone_number,
+        is_primary
+        ) VALUES (
+        #{userId},
+        #{emailId},
+        #{phoneNumber},
+        #{isPrimary}
+        )
+    </insert>
+
+    <select id="getContactById" resultType="com.move.userService.model.Contact">
+        SELECT
+        id,
+        user_id AS userId,
+        email_id AS emailId,
+        phone_number AS phoneNumber,
+        is_primary AS isPrimary
+        FROM Contact
+        WHERE user_id = #{userId}
+    </select>
+</mapper>

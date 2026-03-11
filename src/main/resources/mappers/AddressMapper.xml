@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.move.userService.mapper.AddressMapper">
+
+    <insert id="insertAddress"
+            parameterType="com.move.userService.model.Address"
+            useGeneratedKeys="true"
+            keyProperty="addressId"
+            keyColumn="address_id">
+        INSERT INTO Address (
+        user_id,
+        state_id,
+        city,
+        country,
+        lane_one,
+        pin,
+        is_default
+        ) VALUES (
+        #{userId},
+        #{stateId},
+        #{city},
+        #{country},
+        #{addressLine1},
+        #{zipCode},
+        #{isDefault}
+        )
+    </insert>
+
+    <select id="getAddressByUserId" resultType="com.move.userService.model.Address">
+        SELECT
+        address_id AS addressId,
+        user_id AS userId,
+        state_id AS stateId,
+        city,
+        country,
+        lane_one AS addressLine1,
+        pin AS zipCode,
+        is_default AS isDefault
+        FROM address
+        WHERE user_id = #{userId}
+    </select>
+
+</mapper>
