@@ -1,5 +1,6 @@
 package com.move.userService.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.move.userService.validation.ValidPhone;
 import lombok.Data;
 
@@ -10,6 +11,7 @@ public class Contact {
     private String emailId;
     @ValidPhone
     private String phoneNumber;
+    @JsonProperty("isPrimary")
     private boolean isPrimary;
 
     public boolean isPrimary() {

@@ -1,5 +1,6 @@
 package com.move.userService.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 public class Address {
@@ -9,6 +10,7 @@ public class Address {
     private String city;
     private String stateId; // Links to your state_lookup table
     private String zipCode;
+    @JsonProperty("isDefault")
     private boolean isDefault;
 
     private String country;

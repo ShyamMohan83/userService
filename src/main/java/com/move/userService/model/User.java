@@ -1,5 +1,6 @@
 package com.move.userService.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,7 +25,7 @@ public class User {
     @NotBlank(message = "Current State should not blank")
     @Size(min=5, max=10, message = "Current State should be minimum 5 and maximum 10")
     private String currentState;
-    @NotNull(message="Is active should not be empty or null")
+    @JsonProperty("isActive")
     private boolean isActive;
     private Timestamp lastLogin;
     private Timestamp deletedAt;

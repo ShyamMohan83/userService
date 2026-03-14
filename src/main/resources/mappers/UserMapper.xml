@@ -18,9 +18,9 @@
         #{lastName},
         #{userName},
         #{role},
-        #{currentState},
+        #{currentState, jdbcType=VARCHAR},
         #{isActive},
-        #{lastLogin}
+        #{lastLogin, jdbcType=TIMESTAMP}
         )
     </insert>
 
