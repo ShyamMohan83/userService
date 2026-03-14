@@ -4,10 +4,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.move.userService.mapper.AddressMapper;
 import com.move.userService.mapper.ContactMapper;
 import com.move.userService.mapper.UserMapper;
+import com.move.userService.model.User;
 import com.move.userService.model.UserRegistrationDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class UserService {
@@ -40,5 +43,9 @@ public class UserService {
         userDto.getContact().setUserId(generatedKey);
         addressMapper.insertAddress(userDto.getAddress());
         contactMapper.insertContact(userDto.getContact());
+    }
+
+    public List<User> getAllUsers() {
+        return userMapper.getAllUsers();
     }
 }

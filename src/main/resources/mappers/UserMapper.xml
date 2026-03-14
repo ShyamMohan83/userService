@@ -26,14 +26,27 @@
 
     <select id="getUserById" resultType="com.move.userService.model.User">
         SELECT
-        user_id AS userId,
-        first_name AS firstName,
-        last_name AS lastName,
-        user_name AS userName,
-        role,
+        user_id       AS userId,
+        first_name    AS firstName,
+        last_name     AS lastName,
+        user_name     AS userName,
+        role          AS role,
         current_state AS currentState,
-        is_active AS isActive,
-        last_login AS lastLogin
+        is_active     AS isActive,
+        last_login    AS lastLogin
          FROM user_table  WHERE  user_id = #{user_id}
+    </select>
+
+    <select id="getAllUsers" resultType="com.move.userService.model.User" >
+        SELECT
+        user_id       AS userId,
+        first_name    AS firstName,
+        last_name     AS lastName,
+        user_name     AS userName,
+        role          AS role,
+        current_state AS currentState,
+        is_active     AS isActive,
+        last_login    AS lastLogin
+        FROM user_table;
     </select>
 </mapper>
