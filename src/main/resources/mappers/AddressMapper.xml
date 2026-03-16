@@ -41,4 +41,15 @@
         WHERE user_id = #{userId}
     </select>
 
+    <update id="updateAddress" parameterType="com.move.userService.model.Address">
+        UPDATE address
+        SET
+        city			=		#{city},
+        country			= 		#{country},
+        lane_one	    =		#{addressLine1},
+        pin				=		#{zipCode},
+        state_id		=		#{stateId}
+        where user_id	=		#{userId}
+    </update>
+
 </mapper>

@@ -1,8 +1,6 @@
 package com.move.userService.controller;
 
-import com.move.userService.model.ApiResponse;
-import com.move.userService.model.User;
-import com.move.userService.model.UserRegistrationDTO;
+import com.move.userService.model.*;
 import com.move.userService.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,31 +15,60 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
-    @PostMapping("/register")
-    public ResponseEntity<ApiResponse> createUser(@RequestBody UserRegistrationDTO userDTO) {
+    @PostMapping
+    public ResponseEntity<?> createUser(@RequestBody UserRegistrationDTO userDTO) {
         try {
-            this.userService.userRegistration(userDTO);
             return ResponseEntity
                     .status(HttpStatus.CREATED)
-                    .body(new ApiResponse(true, "User created successfully"));
+                    .body(this.userService.userRegistration(userDTO));
         } catch (Exception e) {
             return ResponseEntity
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ApiResponse(false, "unable to create user" + e.getMessage()));
+                    .body(new ApiResponse(false, "Unable to create user" + e.getMessage()));
         }
-
     }
-    @GetMapping("/all")
-    public ResponseEntity<List<User>> getUsers() {
+    @GetMapping
+    public ResponseEntity<?> getUsers() {
         try {
             return ResponseEntity.ok(userService.getAllUsers());
         } catch(Exception e) {
+            ErrorResponse error = new ErrorResponse("Failed to fetch the user" + e.getMessage(), HttpStatus.BAD_REQUEST.value());
             return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+                    .badRequest().body(error);
         }
     }
-    @GetMapping("user/{id}")
-    public User getUser(@PathVariable("id") Long id) {
-        return null;
-    } // in -progress
+    @GetMapping("/{id}")
+    public  ResponseEntity<?> getUserDetails(@PathVariable("id") Long id) {
+        try {
+            return  ResponseEntity.ok(userService.getUserDetails(id));
+        } catch (Exception e) {
+            ErrorResponse error = new ErrorResponse("Failed to fetch the user" + e.getMessage(), HttpStatus.BAD_REQUEST.value());
+            return ResponseEntity
+                    .badRequest().body(error);
+        }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateUserDetail(@PathVariable("id") Long id, @RequestBody UserRegistrationDTO userDTO) {
+        try{
+            return ResponseEntity.ok(userService.updateUserDetail(userDTO, id));
+        } catch(Exception e) {
+            ErrorResponse error = new ErrorResponse("Failed to update the user" + e.getMessage(), HttpStatus.BAD_REQUEST.value());
+            return ResponseEntity
+                    .badRequest().body(error);
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteUserDetails(@PathVariable("id") Long id , @RequestBody User user) {
+
+        try{
+            return ResponseEntity.ok(userService.deleteUser(user, id));
+        } catch(Exception e) {
+            ErrorResponse error = new ErrorResponse("Failed to update the user" + e.getMessage(), HttpStatus.BAD_REQUEST.value());
+            return ResponseEntity
+                    .badRequest().body(error);
+        }
+    }
+
 }

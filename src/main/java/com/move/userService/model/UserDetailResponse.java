@@ -1,7 +1,7 @@
 package com.move.userService.model;
 
 public class UserDetailResponse {
-    private String userId;
+    private Long userId;
     private String firstName;
     private String lastName;
     private String role;
@@ -10,11 +10,11 @@ public class UserDetailResponse {
     private Address address;
     private Contact contact;
 
-    public String getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
@@ -42,11 +42,11 @@ public class UserDetailResponse {
         this.role = role;
     }
 
-    public Boolean getActive() {
+    public Boolean getIsActive() {
         return isActive;
     }
 
-    public void setActive(Boolean active) {
+    public void setIsActive(Boolean active) {
         isActive = active;
     }
 

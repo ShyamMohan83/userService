@@ -8,4 +8,5 @@ import org.apache.ibatis.annotations.Param;
 public interface AddressMapper {
     void insertAddress(Address address);
     Address getAddressByUserId(@Param("userId") Long userId);
+    public void updateAddress(Address address);
 }

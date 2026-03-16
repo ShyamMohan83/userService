@@ -8,4 +8,6 @@ import org.apache.ibatis.annotations.Param;
 public interface ContactMapper {
     public void insertContact(Contact contact);
     public Contact getContactById(@Param("userId") Long userId);
+    public void updateContact(Contact contact);
+
 }

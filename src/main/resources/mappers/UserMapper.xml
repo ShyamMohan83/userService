@@ -49,4 +49,62 @@
         last_login    AS lastLogin
         FROM user_table;
     </select>
+    <resultMap id="UserDetails" type="com.move.userService.model.UserDetailResponse">
+        <id property="userId" column="user_id" />
+        <result property="firstName" column="firstName" />
+        <result property="lastName" column="lastName" />
+        <result property="role" column="role" />
+        <result property="isActive" column="isActive" />
+        <association property="address" javaType="com.move.userService.model.Address">
+            <result property="country" column="country" />
+            <result property="city" column="city" />
+            <result property="stateId" column="stateId" />
+            <result property="addressLine1" column="addressLine1" />
+            <result property="zipCode" column="zipCode" />
+            <result property="isDefault" column="isDefault" />
+        </association>
+        <association property="contact" javaType="com.move.userService.model.Contact">
+            <result property="emailId" column="emailId"/>
+            <result property="phoneNumber" column="phoneNumber" />
+            <result property="isPrimary" column="isPrimary" />
+        </association>
+    </resultMap>
+    <select id="getUserDetails" resultMap="UserDetails">
+        select u.user_id,
+        u.first_name 	AS 		firstName,
+        u.last_name		As		lastName,
+        u.role			AS		role,
+        u.is_active		AS 		isActive,
+        a.city			AS 		city,
+        a.country		AS		country,
+        a.state_id		AS		stateId,
+        a.lane_one		As		addressLine1,
+        a.pin			As		zipCode,
+        a.is_default	AS		isDefault,
+        c.email_id		AS		emailId,
+        c.phone_number	AS		phoneNumber,
+        c.is_primary	AS		isPrimary
+        From user_table u
+        LEFT JOIN  address a on u.user_id = a.user_id
+        LEFT JOIN contact c on u.user_id = c.user_id
+        WHERE u.user_id = #{userId}
+    </select>
+
+    <update id="updateUser" parameterType="com.move.userService.model.User">
+        UPDATE user_table
+        SET
+        first_name		=		#{firstName},
+        last_name		= 		#{lastName},
+        role			=		#{role},
+        current_state	=		#{currentState}
+        where user_id	=	    #{userId}
+    </update>
+
+    <update id="deleteUser" parameterType="com.move.userService.model.User">
+        UPDATE user_table
+        set
+        is_active = #{isActive}
+        WHERE user_id	=	#{userId}
+    </update>
+
 </mapper>
