@@ -16,59 +16,28 @@ public class UserController {
         this.userService = userService;
     }
     @PostMapping
-    public ResponseEntity<?> createUser(@RequestBody UserRegistrationDTO userDTO) {
-        try {
-            return ResponseEntity
-                    .status(HttpStatus.CREATED)
-                    .body(this.userService.userRegistration(userDTO));
-        } catch (Exception e) {
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ApiResponse(false, "Unable to create user" + e.getMessage()));
-        }
+    public ResponseEntity<UserRegistrationDTO> createUser(@RequestBody UserRegistrationDTO userDTO) {
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(this.userService.userRegistration(userDTO));
     }
     @GetMapping
-    public ResponseEntity<?> getUsers() {
-        try {
-            return ResponseEntity.ok(userService.getAllUsers());
-        } catch(Exception e) {
-            ErrorResponse error = new ErrorResponse("Failed to fetch the user" + e.getMessage(), HttpStatus.BAD_REQUEST.value());
-            return ResponseEntity
-                    .badRequest().body(error);
-        }
+    public ResponseEntity<List<User>> getUsers() {
+        return ResponseEntity.ok(userService.getAllUsers());
     }
     @GetMapping("/{id}")
-    public  ResponseEntity<?> getUserDetails(@PathVariable("id") Long id) {
-        try {
-            return  ResponseEntity.ok(userService.getUserDetails(id));
-        } catch (Exception e) {
-            ErrorResponse error = new ErrorResponse("Failed to fetch the user" + e.getMessage(), HttpStatus.BAD_REQUEST.value());
-            return ResponseEntity
-                    .badRequest().body(error);
-        }
+    public  ResponseEntity<UserDetailResponse> getUserDetails(@PathVariable("id") Long id) {
+        return  ResponseEntity.ok(userService.getUserDetails(id));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateUserDetail(@PathVariable("id") Long id, @RequestBody UserRegistrationDTO userDTO) {
-        try{
-            return ResponseEntity.ok(userService.updateUserDetail(userDTO, id));
-        } catch(Exception e) {
-            ErrorResponse error = new ErrorResponse("Failed to update the user" + e.getMessage(), HttpStatus.BAD_REQUEST.value());
-            return ResponseEntity
-                    .badRequest().body(error);
-        }
+    public ResponseEntity<UserRegistrationDTO> updateUserDetail(@PathVariable("id") Long id, @RequestBody UserRegistrationDTO userDto) {
+        return ResponseEntity.ok(userService.updateUserDetail(userDto, id));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteUserDetails(@PathVariable("id") Long id , @RequestBody User user) {
-
-        try{
-            return ResponseEntity.ok(userService.deleteUser(user, id));
-        } catch(Exception e) {
-            ErrorResponse error = new ErrorResponse("Failed to update the user" + e.getMessage(), HttpStatus.BAD_REQUEST.value());
-            return ResponseEntity
-                    .badRequest().body(error);
-        }
+    public ResponseEntity<User> deleteUserDetails(@PathVariable("id") Long id , @RequestBody User user) {
+        return ResponseEntity.ok(userService.deleteUser(user, id));
     }
 
 }
